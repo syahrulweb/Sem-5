@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jadwal Kuliah</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  th {
+    background-color: #d3d3d3; 
+    font-weight: bold;
+  }
+  .hari {
+    font-weight: bold;
+    background-color: #f9f9f9; 
+  }
+  .jam {
+    width: 120px;
+  }
+  .ruang {
+    width: 150px;
+  }
+  .matakuliah, .dosen {
+    text-align: left;
+    padding-left: 10px;
+  }
+  tfoot td {
+    background-color: #a9a9a9;
+    font-weight: bold;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+      <th>HARI</th>
+      <th>JAM</th>
+      <th>MATA KULIAH</th>
+      <th>DOSEN</th>
+      <th>RUANG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- SENIN -->
+    <tr>
+      <td class="hari" rowspan="2">SENIN</td>
+      <td class="jam">08.00 - 10.00</td>
+      <td class="matakuliah">Kajian Islam</td>
+      <td class="dosen">Ust. Anwar Nashidin, Lc.</td>
+      <td class="ruang" rowspan="2">Ruang Teori</td>
+    </tr>
+    <tr>
+      <td class="jam">10.00 - 12.00</td>
+      <td class="matakuliah">Aplikasi Perkantoran</td>
+      <td class="dosen">Drs. MGS Hendri, M.M</td>
+    </tr>
+    
+    <!-- SELASA -->
+    <tr>
+      <td class="hari" rowspan="2">SELASA</td>
+      <td class="jam">08.00 - 10.00</td>
+      <td class="matakuliah">Linux Fundamental</td>
+      <td class="dosen">Henry Saptono, S.Si, M.Kom</td>
+      <td class="ruang" rowspan="2">Ruang I</td>
+    </tr>
+    <tr>
+      <td class="jam">10.00 - 12.00</td>
+      <td class="matakuliah">Html, Css &amp; Javascript</td>
+      <td class="dosen"></td>
+    </tr>
+    
+    <!-- RABU -->
+    <tr>
+      <td class="hari" rowspan="2">RABU</td>
+      <td class="jam">08.00 - 10.00</td>
+      <td class="matakuliah">Basis Data</td>
+      <td class="dosen">Sirojul Munir, S.Si, M.Kom</td>
+      <td class="ruang" rowspan="2"></td>
+    </tr>
+    <tr>
+      <td class="jam">10.00 - 12.00</td>
+      <td class="matakuliah">Algoritma dan Pemrograman</td>
+      <td class="dosen"></td>
+    </tr>
+    
+    <!-- KAMIS -->
+    <tr>
+      <td class="hari" rowspan="2">KAMIS</td>
+      <td class="jam">08.00 - 10.00</td>
+      <td class="matakuliah">Kewirausahaan &amp; Pengembangan Diri</td>
+      <td class="dosen">Khoirul Umam, S.Pd</td>
+      <td class="ruang" rowspan="2">Ruang Teori</td>
+    </tr>
+    <tr>
+      <td class="jam">10.00 - 12.00</td>
+      <td class="matakuliah">Bahasa Inggris</td>
+      <td class="dosen">Drs. Mahfudz</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="5">JADWAL DAPAT BERUBAH SEWAKTU-WAKTU</td>
+    </tr>
+  </tfoot>
+</table>
+</body>
+</html>
