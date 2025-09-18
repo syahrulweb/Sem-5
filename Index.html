@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Pegawai</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 60%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    thead {
+      background-color: #f2f2f2;
+    }
+    tfoot {
+      background-color: #d9edf7;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Data Pegawai</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama Pegawai</th>
+        <th>Umur</th>
+        <th>Jabatan</th>
+        <th>Status</th>
+        <th>Gaji Pokok</th>
+        <th>Tunjangan Jabatan</th>
+        <th>BPJS</th>
+        <th>Tunjangan Keluarga</th>
+      </tr>
+    </thead>
+    <tbody id="data-pegawai">
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7">Total Gaji</td>
+        <td id="total-gaji"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <script>
+    // Data pegawai
+    let nama = "dodi prayodi";
+    let umur = 25;
+    let jabatan = "manajer";
+    let status = "menikah";
+
+    // Gaji pokok berdasarkan jabatan
+    let gapok;
+    if (jabatan.toLowerCase() === "manajer") {
+      gapok = 15000000;
+    } else if (jabatan.toLowerCase() === "asisten manajer") {
+      gapok = 10000000;
+    } else {
+      gapok = 5000000;
+    }
+
+    // Tunjangan jabatan 15% gapok
+    let tunjJabatan = 0.15 * gapok;
+
+    // BPJS 10% gapok
+    let bpjs = 0.10 * gapok;
+
+    // Tunjangan keluarga 20% gapok (ternary operator)
+    let tunjKeluarga = (status.toLowerCase() === "menikah") ? 0.20 * gapok : 0;
+
+    // Total gaji
+    let total = gapok + tunjJabatan + bpjs + tunjKeluarga;
+
+    // Cetak ke tbody
+    document.getElementById("data-pegawai").innerHTML = `
+      <tr>
+        <td>${nama}</td>
+        <td>${umur}</td>
+        <td>${jabatan}</td>
+        <td>${status}</td>
+        <td>Rp ${gapok.toLocaleString()}</td>
+        <td>Rp ${tunjJabatan.toLocaleString()}</td>
+        <td>Rp ${bpjs.toLocaleString()}</td>
+        <td>Rp ${tunjKeluarga.toLocaleString()}</td>
+      </tr>
+    `;
+
+    // Cetak total ke tfoot
+    document.getElementById("total-gaji").innerText = `Rp ${total.toLocaleString()}`;
+  </script>
+</body>
+</html>
