@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/shared/Header/index.jsx";
 import Footer from "./components/shared/Footer/index.jsx";
 
@@ -17,12 +17,20 @@ function App() {
 
       <div className="container mt-4">
         <Routes>
+          {/* Halaman Utama */}
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
+
+          {/* Halaman Informasi */}
           <Route path="/team" element={<Team />} />
           <Route path="/contact" element={<Contact />} />
+
+          {/* Halaman Auth */}
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Fallback 404 */}
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
       </div>
 

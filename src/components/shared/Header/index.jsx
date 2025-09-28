@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink, Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -29,24 +29,44 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/" className="nav-link fw-semibold">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `nav-link fw-semibold ${isActive ? "text-primary fw-bold" : ""}`
+                }
+              >
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/books" className="nav-link fw-semibold">
+              <NavLink
+                to="/books"
+                className={({ isActive }) =>
+                  `nav-link fw-semibold ${isActive ? "text-primary fw-bold" : ""}`
+                }
+              >
                 Books
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/team" className="nav-link fw-semibold">
+              <NavLink
+                to="/team"
+                className={({ isActive }) =>
+                  `nav-link fw-semibold ${isActive ? "text-primary fw-bold" : ""}`
+                }
+              >
                 Team
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/contact" className="nav-link fw-semibold">
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  `nav-link fw-semibold ${isActive ? "text-primary fw-bold" : ""}`
+                }
+              >
                 Contact
-              </Link>
+              </NavLink>
             </li>
           </ul>
 
