@@ -1,9 +1,20 @@
+import { useState } from "react";
+import booksData from "../../../utils/Books.js";
+
 export default function ProductList() {
-  const products = Array(6).fill({
-    title: "Judul Buku",
-    desc: "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    time: "9 mins",
-  });
+  const [books, setBooks] = useState(booksData);
+
+  const handleAddBook = () => {
+    const newBook = {
+      id: books.length + 1,
+      title: "Buku Baru",
+      author: "Penulis Baru",
+      year: 2025,
+      description: "Buku tambahan yang baru ditambahkan.",
+      image: `https://picsum.photos/600/400?random=${books.length + 10}`,
+    };
+    setBooks([...books, newBook]);
+  };
 
   return (
     <>
@@ -20,15 +31,12 @@ export default function ProductList() {
                 khusus hanya untuk Anda.
               </p>
               <div className="mt-4">
-                <a href="#" className="btn btn-primary btn-lg px-4 me-3 shadow">
-                  <i className="bi bi-eye-fill me-2"></i> View
-                </a>
-                <a
-                  href="#"
-                  className="btn btn-outline-secondary btn-lg px-4 shadow-sm"
+                <button
+                  onClick={handleAddBook}
+                  className="btn btn-success btn-lg px-4 me-3 shadow"
                 >
-                  <i className="bi bi-book me-2"></i> Other Book
-                </a>
+                  <i className="bi bi-plus-circle me-2"></i> Tambah Buku
+                </button>
               </div>
             </div>
           </div>
@@ -39,27 +47,30 @@ export default function ProductList() {
       <div className="album py-5 bg-body-tertiary">
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-            {products.map((product, index) => (
-              <div className="col" key={index}>
+            {books.map((book) => (
+              <div className="col" key={book.id}>
                 <div className="card h-100 shadow-sm border-0 rounded-4 overflow-hidden hover-shadow">
                   <div className="position-relative">
                     <img
-                      src={`https://picsum.photos/600/400?random=${index}`}
+                      src={book.image}
                       className="card-img-top img-fluid"
-                      alt={product.title}
+                      alt={book.title}
                       style={{ objectFit: "cover", height: "250px" }}
                     />
                     <span className="badge bg-primary position-absolute top-0 end-0 m-2 shadow-sm">
-                      {product.time}
+                      {book.year}
                     </span>
                   </div>
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title fw-bold text-dark">
-                      {product.title}
+                      {book.title}
                     </h5>
                     <p className="card-text text-muted flex-grow-1">
-                      {product.desc}
+                      {book.description}
                     </p>
+                    <small className="text-muted d-block mb-2">
+                      ✍️ {book.author}
+                    </small>
                     <div className="d-flex justify-content-between align-items-center mt-3">
                       <div className="btn-group">
                         <button
@@ -76,8 +87,8 @@ export default function ProductList() {
                         </button>
                       </div>
                       <small className="text-muted">
-                        <i className="bi bi-clock me-1"></i>
-                        {product.time}
+                        <i className="bi bi-calendar me-1"></i>
+                        {book.year}
                       </small>
                     </div>
                   </div>
