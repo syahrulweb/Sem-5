@@ -3,7 +3,7 @@ import API from "../_api";
 export const getGenres = async () => {
   const { data } = await API.get("/genres");
   return data.data;
-};
+}
 
 export const createGenre = async (data) => {
   try {
@@ -13,4 +13,33 @@ export const createGenre = async (data) => {
     console.log("Error creating genre:", error);
     throw error;
   }
-};
+}
+
+export const showGenre = async (id) => {
+  try {
+    const { data } = await API.get(`/genres/${id}`);
+    return data.data;
+  } catch (error) {
+    console.log("Error fetching genre details:", error);
+    throw error;
+  }
+}
+
+export const updateGenre = async (id, data) => {
+  try {
+    const response = await API.post(`/genres/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.log("Error updating genre:", error);
+    throw error;
+  }
+}
+
+export const deleteGenre = async (id) => {
+  try {
+    await API.delete(`/genres/${id}`);
+  } catch (error) {
+    console.log("Error deleting genre:", error);
+    throw error;
+  }
+}
