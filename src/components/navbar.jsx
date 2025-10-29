@@ -1,77 +1,95 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
 
-export default function Footer() {
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <>
-      <footer className="border-t-2 p-4 bg-white md:p-8 lg:p-10 dark:bg-gray-800">
-        <div className="mx-auto max-w-screen-xl text-center">
-          <ul className="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
-            <li>
-              <Link
-                to={"/about"}
-                className="mr-4 hover:underline md:mr-6"
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/premium"}
-                className="mr-4 hover:underline md:mr-6"
-              >
-                Premium
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/campaigns"}
-                className="mr-4 hover:underline md:mr-6"
-              >
-                Campaigns
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/blog"}
-                className="mr-4 hover:underline md:mr-6"
-              >
-                Blog
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/affiliate"}
-                className="mr-4 hover:underline md:mr-6"
-              >
-                Affiliate Program
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/faqs"}
-                className="mr-4 hover:underline md:mr-6"
-              >
-                FAQs
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/contact"}
-                className="mr-4 hover:underline md:mr-6"
-              >
-                Contact
-              </Link>
-            </li>
-          </ul>
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            ©{" "}
-            <Link to={"/"} className="hover:underline">
-              2025
-            </Link>
-            . All Rights Reserved.
-          </span>
+    <nav className="bg-white border-b-2 shadow-sm dark:bg-gray-800">
+      <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
+        {/* LOGO */}
+        <Link
+          to="/"
+          className="text-2xl font-bold text-indigo-600 dark:text-white"
+          onClick={closeMenu}
+        >
+          📚 BookStore
+        </Link>
+
+        {/* TOGGLE MENU MOBILE */}
+        <button
+          className="md:hidden text-gray-700 dark:text-white focus:outline-none"
+          onClick={toggleMenu}
+        >
+          {isOpen ? "✖" : "☰"}
+        </button>
+
+        {/* MENU LINKS */}
+        <div
+          className={`${
+            isOpen ? "block" : "hidden"
+          } absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent dark:bg-gray-800 md:flex md:space-x-6 md:items-center text-center md:text-left border-t md:border-0`}
+        >
+          <NavLink
+            to="/"
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `block px-4 py-2 md:p-0 font-medium ${
+                isActive
+                  ? "text-indigo-600"
+                  : "text-gray-700 hover:text-indigo-500 dark:text-gray-300"
+              }`
+            }
+          >
+            Beranda
+          </NavLink>
+
+          <NavLink
+            to="/books"
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `block px-4 py-2 md:p-0 font-medium ${
+                isActive
+                  ? "text-indigo-600"
+                  : "text-gray-700 hover:text-indigo-500 dark:text-gray-300"
+              }`
+            }
+          >
+            Buku
+          </NavLink>
+
+          <NavLink
+            to="/login"
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `block px-4 py-2 md:p-0 font-medium ${
+                isActive
+                  ? "text-indigo-600"
+                  : "text-gray-700 hover:text-indigo-500 dark:text-gray-300"
+              }`
+            }
+          >
+            Login
+          </NavLink>
+
+          <NavLink
+            to="/register"
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `block px-4 py-2 md:p-0 font-medium ${
+                isActive
+                  ? "text-indigo-600"
+                  : "text-gray-700 hover:text-indigo-500 dark:text-gray-300"
+              }`
+            }
+          >
+            Register
+          </NavLink>
         </div>
-      </footer>
-    </>
+      </div>
+    </nav>
   );
 }
