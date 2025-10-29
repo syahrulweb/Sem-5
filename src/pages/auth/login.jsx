@@ -22,7 +22,7 @@ export default function Login() {
       const response = await loginUser(formData);
       localStorage.setItem("user", JSON.stringify(response));
       alert("Login berhasil!");
-      navigate("/admin"); // arahkan ke dashboard admin
+      navigate("/admin"); 
     } catch (error) {
       console.error("Login gagal:", error);
       alert("Email atau password salah!");
