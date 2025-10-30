@@ -1,151 +1,92 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { createUser } from "../../_services/auth";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    username: "",
-    password: "",
-  });
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("customer");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
 
-    // Validasi
-    if (!formData.name || !formData.email || !formData.username || !formData.password) {
-      alert("Semua field harus diisi!");
-      return;
-    }
+    // Ambil data users lama dari localStorage
+    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      alert("Format email tidak valid!");
-      return;
-    }
-
-    try {
-      await createUser(formData);
-      alert("Registrasi berhasil! Silakan login.");
+    // Cek kalau email sudah terdaftar
+    const isRegistered = existingUsers.some((u) => u.email === email);
+    if (isRegistered) {
+      alert("Email sudah terdaftar! Silakan login.");
       navigate("/login");
-    } catch (error) {
-      console.error("Gagal registrasi:", error);
-      alert("Terjadi kesalahan saat registrasi.");
+      return;
     }
+
+    // Buat user baru
+    const newUser = { email, password, role };
+
+    // Simpan ke daftar users
+    const updatedUsers = [...existingUsers, newUser];
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+
+    // Simpan user yang sedang login
+    localStorage.setItem("user", JSON.stringify(newUser));
+
+    alert(`Registrasi berhasil sebagai ${role}`);
+    navigate("/");
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Create an account
-            </h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form
+        onSubmit={handleRegister}
+        className="bg-white p-6 rounded-xl shadow-md w-80"
+      >
+        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
 
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Your name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Masukkan nama lengkap"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  required
-                />
-              </div>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border p-2 w-full mb-3 rounded"
+          required
+        />
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Your email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="name@company.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  required
-                />
-              </div>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 w-full mb-3 rounded"
+          required
+        />
 
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Username
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="Masukkan username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  required
-                />
-              </div>
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          className="border p-2 w-full mb-3 rounded"
+        >
+          <option value="customer">Customer</option>
+          <option value="admin">Admin</option>
+        </select>
 
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  required
-                />
-              </div>
+        <button
+          type="submit"
+          className="bg-green-600 text-white py-2 w-full rounded hover:bg-green-700"
+        >
+          Register
+        </button>
 
-              <button
-                type="submit"
-                className="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              >
-                Create an account
-              </button>
-
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="font-medium text-indigo-600 hover:underline dark:text-indigo-500"
-                >
-                  Login here
-                </Link>
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+        <p className="text-sm text-center mt-3">
+          Sudah punya akun?{" "}
+          <span
+            className="text-blue-600 hover:underline cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            Login di sini
+          </span>
+        </p>
+      </form>
+    </div>
   );
 }
