@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getBooks } from "../../../_services/books";
+import { bookImageStorage } from "../../../_api";
+
+
 
 export default function Books() {
   const [books, setBooks] = useState([]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,12 +18,15 @@ export default function Books() {
     fetchData();
   }, []);
 
+  
+
   return (
     <section className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
           {books.length > 0 ? (
             books.map((book) => (
+              
               <div
                 key={book.id}
                 className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
@@ -27,13 +34,9 @@ export default function Books() {
                 <div className="h-56 w-full">
                   <Link to={`/books/show/${book.id}`}>
                     <img
-                      className="mx-auto h-full dark:hidden"
-                      src={book.cover_photo || "https://via.placeholder.com/300x200"}
-                      alt={book.title}
-                    />
-                    <img
-                      className="mx-auto hidden h-full dark:block"
-                      src={book.cover_photo || "https://via.placeholder.com/300x200"}
+                      className="mx-auto h-full"
+                      src={`${bookImageStorage}/${book.cover_photo}`}
+                      
                       alt={book.title}
                     />
                   </Link>
